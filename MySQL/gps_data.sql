@@ -6,7 +6,6 @@ drop table if exists gps_data cascade;
 drop table if exists imu_data cascade;
 set foreign_key_checks = 1;
 
-
 create table gps_data
 (
 	seq int not null auto_increment primary key,
