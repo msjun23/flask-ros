@@ -30,7 +30,6 @@ ros.on('close', function() {
     console.log('Connection to websocket server closed.');
 });
 
-
 // Subscribing to a Topic
 // ----------------------
 
