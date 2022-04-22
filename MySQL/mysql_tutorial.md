@@ -1,9 +1,3 @@
-# 참고자료
-> - [MySQL 설치](https://velog.io/@seungsang00/Ubuntu-%EC%9A%B0%EB%B6%84%ED%88%AC%EC%97%90-MySQL-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
-> - [MySQL 수업(조금 엣날거)](https://opentutorials.org/course/195)
-
----
-
 # MySQL Installation
 ```bash
 $ sudo apt udpate

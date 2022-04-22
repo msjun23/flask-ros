@@ -21,28 +21,28 @@ ros.on('close', function() {
 // ----------------------
 
 // GPS data
-var gnssTopic = new ROSLIB.Topic({
+var gnss_listener = new ROSLIB.Topic({
     ros: ros,
     name: '/gnss',
     messageType: 'sensor_msgs/NavSatFix'
 });
 
-gnssTopic.subscribe(function(message) {
-    console.log('Received message on ' + gnssTopic.name + ': ' + message.latitude + ', ' + message.longitude + ', ' + message.altitude);
+gnss_listener.subscribe(function(message) {
+    console.log('Received message on ' + gnss_listener.name + ': ' + message.latitude + ', ' + message.longitude + ', ' + message.altitude);
     document.getElementById('latitude').innerHTML = message.latitude;
     document.getElementById('longitude').innerHTML = message.longitude;
     document.getElementById('altitude').innerHTML = message.altitude;
-    //gnssTopic.unsubscribe();
+    //gnss_listener.unsubscribe();
 });
 
 // Image data
-var imageTopic = new ROSLIB.Topic({
+var image_listener = new ROSLIB.Topic({
     ros: ros,
     name: '/d435/color/image_raw/compressed',
     messageType: 'sensor_msgs/CompressedImage'
 });
 
-imageTopic.subscribe(function(message) {
+image_listener.subscribe(function(message) {
     document.getElementById('my_image').src = "data:image/jpg;base64," + message.data;
-    //imageTopic.unsubscribe();
+    //image_listener.unsubscribe();
 });
