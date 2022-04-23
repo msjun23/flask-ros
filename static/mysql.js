@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
     host: 'localhost', // host address
     user: 'aril', // mysql user
     password: '1234', // mysql password
-    database: 'gps_db' // mysql database
+    database: 'xsens_db' // mysql database
 });
 
 connection.connect();

@@ -1,5 +1,5 @@
-create database if not exists gps_db;
-use gps_db;
+create database if not exists xsens_db;
+use xsens_db;
 
 set foreign_key_checks = 0;
 drop table if exists gps_data cascade;
@@ -27,7 +27,7 @@ create table imu_data
     linear_acceleration_z float not null,
     angular_velocity_x float not null,
     angular_velocity_y float not null,
-    angular_velocity_Z float not null
+    angular_velocity_z float not null
 );
 -- insert into imu_data(quaternion_w, quaternion_x, quaternion_y, quaternion_z, linear_acceleration_x, linear_acceleration_y, linear_acceleration_z, angular_velocity_x, angular_velocity_y, angular_velocity_z) values(1.3333333, 1.2222, 1.33333, 1.44444, 1.2223, 23.444, 3.444444, 0.00001, 0.029304, 0.1023904);
 -- SELECT seq, time_stamp, quaternion_w, quaternion_x, quaternion_y, quaternion_z, linear_acceleration_x, linear_acceleration_y, linear_acceleration_z, angular_velocity_x, angular_velocity_y, angular_velocity_z FROM imu_data ORDER BY seq DESC LIMIT 1;
