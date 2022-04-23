@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+</head>
+
+<body>
+    <h1>Watcher: Monitoring System</h1>
+    
+    <img id="my_image" style='height: 30%; width: 30%; object-fit: contain' src="">
+
+    <article id="9b5c0aae-0e33-400a-aa3a-f406e81f2de4" class="page sans">
+        <div class="page-body">
+            <h1>GPS: Map needs to be updated 🌏</h1>
+            {% for data in gps_data %}
+                <p> seq: <td>{{data.seq}}, time_stamp: <td>{{data.time_stamp}}</td></td></p>
+                <p> 위도:
+                    <span id="latitude"><td>{{data.latitude}}</td></span>
+                </p>
+                <p> 경도:
+                    <span id="longitude">{{data.longitude}}</span>
+                </p>
+                <p> 고도:
+                    <span id="altitude">{{data.altitude}}</span>
+                </p>
+            {% endfor %}
+            <iframe class="map", src="/map" width="600" height="600"></iframe>
+
+            <br></br><br></br>
+
+            <h1>Imu</h1>
+            {%  for data in imu_data  %}
+                <p>seq: {{data.seq}},  time: {{data.time_stamp}}</p>
+                <p>quaternion_w: {{data.quaternion_w}}, quaternion_x: {{data.quaternion_x}}, quaternion_y: {{data.quaternion_y}}, quaternion_z: {{data.quaternion_z}}</p>
+                <p>linear_acceleration_x: {{data.linear_acceleration_x}}, linear_acceleration_y: {{data.linear_acceleration_y}}, linear_acceleration_z: {{data.linear_acceleration_z}}</p>
+                <p>angular_velocity_x: {{data.angular_velocity_x}}, angular_velocity_y: {{data.angular_velocity_y}},  angular_velocity_z: {{data.angular_velocity_z}}</p>
+            {%  endfor  %}
+
+            <p id="f8d7074e-9e67-4277-bb14-a60f69565a35" class="">Picture</p>
+            <p id="2afbd3bb-6911-4c85-ac43-0dd9321908e6" class=""><button>Video</button></p>
+        </div>
+    </article>
+</body>
+</html>
