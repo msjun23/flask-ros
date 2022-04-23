@@ -12,7 +12,7 @@ app = Flask(__name__)
 # def home():
 #     return 'Hello, World!'
 
-# @app.route('/') # main url
+# @app.route('/') # main url, with ROS
 # def index():
 #   return render_template("subscriber.html")
 
@@ -20,7 +20,7 @@ app = Flask(__name__)
 def map():
     return render_template('map.html')
 
-@app.route('/') # main url
+@app.route('/') # main url, with DB
 def index():
     # Get data from database
     # Dictionary
