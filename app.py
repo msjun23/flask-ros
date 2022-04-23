@@ -33,7 +33,7 @@ def index():
     start_longitude = gps_data[0]['longitude']
     print(start_latitude, start_longitude)
     
-    map = folium.Map(location=[start_latitude, start_longitude], tiles="Stamen Toner", zoom_start=18)
+    map = folium.Map(location=[start_latitude, start_longitude], tiles="Stamen Toner", zoom_start=16)
 
     start_tooltip = "Start location"
     last_tooltip = "last location"
