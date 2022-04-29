@@ -18,11 +18,15 @@ $ roslaunch rosbridge_server rosbridge_websocket.launch
 
 먼저 [app.py](/app.py)를 확인할 필요가 있다.
 
-![url_ros](/images/url_ros.png)
+```python
+@app.route('/') # main url, with ROS
+def index():
+  return render_template("ros.html")
+```
 
 위 부분만 주석 해제하고 다른 app.route()는 모두 주석처리 해야한다.
 
-아래 내용은 [html 파일](/templates/subscriber.html)과 [JavaScript 파일](/static/subscriber.js)에서 확인 가능하다. html에서 페이지의 모양을 만들고, 자바스크립트를 호출하여 기능을 수행한다.
+아래 내용은 [html 파일](/templates/ros.html)과 [JavaScript 파일](/static/ros.js)에서 확인 가능하다. html에서 페이지의 모양을 만들고, 자바스크립트를 호출하여 기능을 수행한다.
 
 1. 다음과 같이 subscribe한 토픽을 출력할 자리를 먼저 정의한다. 위도와 경도, 고도의 경우엔 텍스트 형식으로, 이미지의 경우엔 당연히 이미지로 만들었다.
 

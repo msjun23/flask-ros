@@ -46,3 +46,26 @@ image_listener.subscribe(function(message) {
     document.getElementById('my_image').src = "data:image/jpg;base64," + message.data;
     //image_listener.unsubscribe();
 });
+
+// Publishing a Topic
+// ------------------
+
+var cmd_vel = new ROSLIB.Topic({
+    ros: ros,
+    name: '/cmd_vel',
+    messageType: 'geometry_msgs/Twist'
+});
+
+var twist = new ROSLIB.Message({
+    linear: {
+        x: 0.1,
+        y: 0.2,
+        z: 0.3
+    },
+    angular: {
+        x: -0.1,
+        y: -0.2,
+        z: -0.3
+    }
+});
+cmd_vel.publish(twist);
