@@ -48,9 +48,13 @@ def handle_my_custom_event(json, method=['GET','POST']):
 def index():
   return render_template("ros.html")
 
-@app.route('/map')
+@app.route('/real_time_map')
 def map():
-    return render_template('map.html')
+    return render_template('real_time_map.html')
+
+# @app.route('/map')
+# def map():
+#     return render_template('map.html')
 
 ###@app.route('/upload, methods= ['POST'])
 ###def upload_file():

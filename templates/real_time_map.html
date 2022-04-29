@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+    <meta name="viewport" content="width=device-width,
+        initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+        #folium_map {
+            position: relative;
+            width: 100.0%;
+            height: 100.0%;
+            left: 0.0%;
+            top: 0.0%;
+        }
+    </style>
+        
+</head>
+
+<body> 
+    <div class="folium-map" id="folium_map" ></div>
+</body>
+
+<script>
+    // Init map
+    var folium_map = L.map(
+        "folium_map",
+        {
+            center: [37.4554, 126.951],
+            crs: L.CRS.EPSG3857,
+            zoom: 16,
+            zoomControl: true,
+            preferCanvas: false,
+        }
+    );
+
+    var latitude = 37.4554;
+    var longitude = 126.951;
+
+    // Make map layer
+    var tile_layer_5e761c78dca2413a8959418e1e3e33b2 = L.tileLayer(
+        "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+        {"attribution": "Map tiles by \u003ca href=\"http://stamen.com\"\u003eStamen Design\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by/3.0\"\u003eCC BY 3.0\u003c/a\u003e. Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+    ).addTo(folium_map);
+
+    // Connecting to ROS
+    var ros = new ROSLIB.Ros({
+        url: 'ws://localhost:9090'
+    });
+
+    ros.on('connection', function() {
+        console.log('Connected to websocket server.');
+    });
+
+    ros.on('error', function(error) {
+        console.log('Error connecting to websocket server: ', error);
+    });
+
+    ros.on('close', function() {
+        console.log('Connection to websocket server closed.');
+    });
+    
+    // Subscribing to a GPS data
+    var gnss_listener = new ROSLIB.Topic({
+        ros: ros,
+        name: '/gnss',
+        messageType: 'sensor_msgs/NavSatFix'
+    });
+
+    gnss_listener.subscribe(function(message) {
+        latitude = message.latitude;
+        longitude = message.longitude;
+
+        // Circle marker 1
+        var circle_marker_1 = L.circleMarker(
+            [latitude, longitude],
+            {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "crimson", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+        ).addTo(folium_map);
+        
+        var popup_1 = L.popup({"maxWidth": "100%"});
+        var html_1 = $(`<div id="html_1" style="width: 100.0%; height: 100.0%;">Current location</div>`)[0];
+        popup_1.setContent(html_1);
+        circle_marker_1.bindPopup(popup_1);
+
+        /////////////////////
+        var lat_lng_popup_1 = L.popup();
+        function latLngPop(e) {
+            lat_lng_popup_1
+                .setLatLng(e.latlng)
+                .setContent("Latitude: " + e.latlng.lat.toFixed(4) +
+                            "<br>Longitude: " + e.latlng.lng.toFixed(4))
+                .openOn(folium_map);
+            }
+        folium_map.on('click', latLngPop);
+    });
+</script>
